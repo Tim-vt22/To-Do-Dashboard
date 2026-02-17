@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>Contec Dashboard</title>
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#0f172a">
@@ -30,6 +32,9 @@
       line-height: 1.5;
       -ms-overflow-style: none;
       scrollbar-width: none;
+
+      overflow: hidden;
+      overscroll-behavior: none;
     }
     html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; }
 
@@ -51,7 +56,12 @@
       padding: 20px;
       position: relative;
       z-index: 10;
+
+      height: calc(100vh - 200px);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
+
 
     h1 {
       margin: 0 0 25px 0;
