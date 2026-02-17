@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#000000">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Contec Dashboard</title>
   <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#000000">
+
 
   <style>
 
@@ -933,7 +934,7 @@
 
     if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
-            navigator.serviceWorker.register("/service-worker.js")
+            navigator.serviceWorker.register("/service-worker.js?v=3")
             .then(() => console.log("Service Worker registriert"))
             .catch(err => console.log("SW Fehler", err));
         });

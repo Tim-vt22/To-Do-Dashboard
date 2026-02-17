@@ -1,7 +1,8 @@
 {
   "name": "Contec Dashboard",
   "short_name": "Contec",
-  "start_url": "/",
+  "start_url": "/?v=3",
+  "id": "/?v=3",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
