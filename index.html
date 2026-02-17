@@ -38,7 +38,7 @@
       overscroll-behavior: none;
 
 
-      
+
     }
     body::before{
       content: "";
@@ -66,17 +66,36 @@
       -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
     }
 
-    .container {
+    .container{
       max-width: 700px;
       margin: -35px auto 0;
       padding: 20px;
       position: relative;
       z-index: 10;
 
-      height: calc(100vh - 200px);
+      min-height: 100vh;
+
+      display: flex;
+      flex-direction: column;
+    }
+
+
+    .scroll-area{
+      flex: 1;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
+      min-height: 0;
+      padding-top: 10px;
+      padding-bottom: calc(env(safe-area-inset-bottom) + 90px);
+
+      scrollbar-width: none;
+      -ms-overflow-style: none;
     }
+    .scroll-area::-webkit-scrollbar{
+      width: 0;
+      height: 0;
+    }
+
 
 
     h1 {
@@ -508,16 +527,20 @@
       <button class="sort-btn" onclick="sortProjects()">⇅ Nach Priorität</button>
     </div>
 
-    <div class="project-list" id="projectListContainer"></div>
+    <div class="scroll-area">
+      <div class="project-list" id="projectListContainer"></div>
 
-    <div style="margin-top: 15px;">
-      <div class="card add-card" onclick="openNewProjectModal()">
-        + Neues Projekt hinzufügen
+      <div style="margin-top: 15px;">
+        <div class="card add-card" onclick="openNewProjectModal()">
+          + Neues Projekt hinzufügen
+        </div>
       </div>
-    </div>
-  </div>
+    </div>  <!-- ✅ scroll-area zu -->
+
+  </div> <!-- ✅ container zu -->
 
   <div class="modal-overlay" id="projectModal" onclick="closeModal(event)">
+
     <div class="modal-content">
       <div class="modal-header">
         <span id="modalHeaderTitle">Projekt bearbeiten</span>
