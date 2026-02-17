@@ -5,7 +5,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <title>Contec Dashboard</title>
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#0f172a">
@@ -33,24 +33,14 @@
       line-height: 1.5;
       -ms-overflow-style: none;
       scrollbar-width: none;
-
+      background: #0000;
       overflow: hidden;
       overscroll-behavior: none;
 
 
 
     }
-    body::before{
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: env(safe-area-inset-top);
-      background: #000;
-      z-index: 9999;
-      pointer-events: none;
-    }
+
 
     html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; }
 
@@ -73,7 +63,9 @@
       position: relative;
       z-index: 10;
 
+      height: 100dvh;
       min-height: 100vh;
+
 
       display: flex;
       flex-direction: column;
@@ -86,8 +78,9 @@
       -webkit-overflow-scrolling: touch;
       min-height: 0;
       padding-top: 10px;
-      padding-bottom: calc(env(safe-area-inset-bottom) + 90px);
-
+      /* Größeres Bottom-Padding damit der letzte Button vollständig scrollbar ist */
+      padding-bottom: calc(env(safe-area-inset-bottom) + 140px);
+      height: 100%;
       scrollbar-width: none;
       -ms-overflow-style: none;
     }
@@ -503,6 +496,13 @@
       .badge { margin-left: 0; margin-top: 8px; }
       h1 { font-size: 2rem; }
     }
+
+    .app{
+      min-height: 100dvh;
+      background: var(--bg-color);
+      box-sizing: border-box;
+    }
+
   </style>
 
   <script>
@@ -517,35 +517,44 @@
 </head>
 
 <body>
-  <div class="cover-image"></div>
 
-  <div class="container">
-    <h1>To-Do Dashboard</h1>
+  <div class="app">
 
-    <div class="section-header">
-      <div class="section-title">Anstehende Projekte</div>
-      <button class="sort-btn" onclick="sortProjects()">⇅ Nach Priorität</button>
+    <div class="cover-image"></div>
+
+    <div class="container">
+      <h1>To-Do Dashboard</h1>
+
+      <div class="section-header">
+        <div class="section-title">Anstehende Projekte</div>
+        <button class="sort-btn" onclick="sortProjects()">⇅ Nach Priorität</button>
+      </div>
+
+      <div class="scroll-area">
+        <div class="project-list" id="projectListContainer"></div>
+
+        <div style="margin-top: 15px;">
+          <div class="card add-card" onclick="openNewProjectModal()">
+            + Neues Projekt hinzufügen
+          </div>
+        </div>
+
+        <div style="height:65px;"></div>
+      </div>
+
     </div>
 
-    <div class="scroll-area">
-      <div class="project-list" id="projectListContainer"></div>
+  </div> <!-- app zu -->
 
-      <div style="margin-top: 15px;">
-        <div class="card add-card" onclick="openNewProjectModal()">
-          + Neues Projekt hinzufügen
-        </div>
-      </div>
-    </div>  <!-- ✅ scroll-area zu -->
 
-  </div> <!-- ✅ container zu -->
+  <!-- MODALS bleiben außerhalb der .app -->
 
   <div class="modal-overlay" id="projectModal" onclick="closeModal(event)">
-
     <div class="modal-content">
       <div class="modal-header">
         <span id="modalHeaderTitle">Projekt bearbeiten</span>
         <button class="modal-close-btn" onclick="toggleModal()" aria-label="Schließen">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
             <path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </button>
@@ -553,7 +562,7 @@
 
       <div class="form-group">
         <label>Projekt Name</label>
-        <input type="text" id="modalTitleInput" placeholder="Name des Projekts">
+        <input type="text" id="modalTitleInput">
       </div>
 
       <div class="form-group">
@@ -566,7 +575,7 @@
 
       <div class="form-group">
         <label>Details & Notizen</label>
-        <textarea id="modalNotes" placeholder="Was gibt es zu tun?"></textarea>
+        <textarea id="modalNotes"></textarea>
       </div>
 
       <div class="form-group">
@@ -609,6 +618,9 @@
       </div>
     </div>
   </div>
+
+
+
 
   <script>
     let currentCardId = null;
