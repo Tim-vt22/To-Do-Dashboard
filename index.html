@@ -530,7 +530,7 @@
       padding-right: 15px;
 
       
-      height: 46px;   /* oder 48px – je nachdem, was bei dir zu den anderen passt */
+      height: 44px;   /* oder 48px – je nachdem, was bei dir zu den anderen passt */
       line-height: 22px;  /* stabilisiert die Höhe im Leerzustand */
     }
 
@@ -974,7 +974,7 @@
 
     if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
-            navigator.serviceWorker.register("/service-worker.js?v=5")
+            navigator.serviceWorker.register("/service-worker.js?v=6")
             .then(() => console.log("Service Worker registriert"))
             .catch(err => console.log("SW Fehler", err));
         });
