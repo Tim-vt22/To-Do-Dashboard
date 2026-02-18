@@ -528,7 +528,14 @@
       appearance: none;
 
       padding-right: 15px;
+
+      
+      height: 46px;   /* oder 48px – je nachdem, was bei dir zu den anderen passt */
+      line-height: 22px;  /* stabilisiert die Höhe im Leerzustand */
     }
+
+
+
 
     input[type="date"]::-webkit-calendar-picker-indicator{
       opacity: 0.75;
@@ -967,7 +974,7 @@
 
     if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
-            navigator.serviceWorker.register("/service-worker.js?v=4")
+            navigator.serviceWorker.register("/service-worker.js?v=5")
             .then(() => console.log("Service Worker registriert"))
             .catch(err => console.log("SW Fehler", err));
         });
