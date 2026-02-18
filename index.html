@@ -512,6 +512,37 @@
       background: var(--bg-color);
     }
 
+      /* ===== iOS PWA Date Input Fix ===== */
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    input[type="date"]{
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box !important;
+
+      -webkit-appearance: none;
+      appearance: none;
+
+      padding-right: 15px;
+    }
+
+    input[type="date"]::-webkit-calendar-picker-indicator{
+      opacity: 0.75;
+      cursor: pointer;
+    }
+
+    input[type="date"]{
+      max-width: 100%;
+      box-sizing: border-box !important;
+      display: block;
+    }
+
+
+
 
   </style>
 
@@ -936,7 +967,7 @@
 
     if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
-            navigator.serviceWorker.register("/service-worker.js?v=3")
+            navigator.serviceWorker.register("/service-worker.js?v=4")
             .then(() => console.log("Service Worker registriert"))
             .catch(err => console.log("SW Fehler", err));
         });
