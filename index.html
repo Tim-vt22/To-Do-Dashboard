@@ -85,12 +85,12 @@
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
       min-height: 0;
-      padding-top: 10px;
-      /* Größeres Bottom-Padding damit der letzte Button vollständig scrollbar ist */
-      padding-bottom: calc(env(safe-area-inset-bottom) + 140px);
+      padding-top: 5px;
+      /* Größe10res Bottom-Padding damit der letzte Button vollständig scrollbar ist */
+      padding-bottom: calc(env(safe-area-inset-bottom) + 165px);
       height: 100%;
       scrollbar-width: none;
-      -ms-overflow-style: none;
+      -m610043s-overflow-style: none;
     }
     .scroll-area::-webkit-scrollbar{
       width: 0;
@@ -100,7 +100,7 @@
 
 
     h1 {
-      margin: 0 0 25px 0;
+      margin: 0 0 15px 0;
       font-size: 2.2rem;
       font-weight: 700;
       letter-spacing: -0.5px;
@@ -111,17 +111,61 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
       border-bottom: 1px solid var(--border-color);
       padding-bottom: 5px;
     }
 
     .section-title {
       color: var(--text-muted);
-      font-size: 0.85rem;
+      font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 1px;
       font-weight: 600;
+    }
+
+    /* ===== BOTTOM TOOLBAR ===== */
+    .bottom-toolbar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 70px;
+      background: var(--bg-color);
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 100;
+      padding-bottom: env(safe-area-inset-bottom);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .toolbar-btn {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 8px 0;
+      font-size: 0.7rem;
+      transition: color 0.2s ease;
+      text-align: center;
+    }
+
+    .toolbar-btn:hover,
+    .toolbar-btn.active {
+      color: var(--accent);
+    }
+
+    .toolbar-icon {
+      font-size: 1.5rem;
     }
 
     .sort-btn {
@@ -171,7 +215,7 @@
     }
 
     .card-title {
-      font-weight: 600;
+      font-weight: 500;
       display: block;
       margin-bottom: 6px;
       font-size: 1.1rem;
@@ -510,6 +554,7 @@
       z-index: 1;
       min-height: 100dvh;
       background: var(--bg-color);
+      padding-bottom: 70px;
     }
 
       /* ===== iOS PWA Date Input Fix ===== */
@@ -595,7 +640,29 @@
     </div>
   </div>
 
-
+  <!-- BOTTOM TOOLBAR -->
+  <div class="bottom-toolbar">
+    <button class="toolbar-btn active" onclick="setActivePage(this, 'overview')">
+      <span class="toolbar-icon">📋</span>
+      <span>Übersicht</span>
+    </button>
+    <button class="toolbar-btn" onclick="setActivePage(this, 'tasks')">
+      <span class="toolbar-icon">✓</span>
+      <span>Aufgaben</span>
+    </button>
+    <button class="toolbar-btn" onclick="setActivePage(this, 'team')">
+      <span class="toolbar-icon">👥</span>
+      <span>Team</span>
+    </button>
+    <button class="toolbar-btn" onclick="setActivePage(this, 'chat')">
+      <span class="toolbar-icon">💬</span>
+      <span>Chat</span>
+    </button>
+    <button class="toolbar-btn" onclick="setActivePage(this, 'profile')">
+      <span class="toolbar-icon">👤</span>
+      <span>Profil</span>
+    </button>
+  </div>
 
   <!-- MODALS bleiben außerhalb der .app -->
 
