@@ -32,7 +32,7 @@
       --radius: 12px;
       --border-color: #334155;
       --progress-offset-y: 0px;
-      
+      --toolbar-offset: 8px;
     }
 
     html, body {
@@ -87,7 +87,7 @@
       min-height: 0;
       padding-top: 5px;
       /* Größe10res Bottom-Padding damit der letzte Button vollständig scrollbar ist */
-      padding-bottom: calc(env(safe-area-inset-bottom) + 165px);
+      padding-bottom: calc(env(safe-area-inset-bottom) + 185px);
       height: 100%;
       scrollbar-width: none;
       -m610043s-overflow-style: none;
@@ -128,9 +128,10 @@
     .bottom-toolbar {
       position: fixed;
       bottom: 0;
+      padding-bottom: calc(env(safe-area-inset-bottom) + var(--toolbar-offset));
       left: 0;
       right: 0;
-      height: 70px;
+      height: 90px;
       background: var(--bg-color);
       border-top: 1px solid var(--border-color);
       display: flex;
@@ -140,6 +141,18 @@
       padding-bottom: env(safe-area-inset-bottom);
       max-width: 700px;
       margin: 0 auto;
+      /* Füllt den unteren Schlitz mit Hintergrundfarbe */
+      &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 10px;
+        height: env(safe-area-inset-bottom);
+        background: var(--bg-color);
+        pointer-events: none;
+        z-index: 101;
+      }
     }
 
     .toolbar-btn {
@@ -169,7 +182,8 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 30px; /* Adjust as needed for your tab bar */
+        height: 0px; /* Adjust as needed for your tab bar */
+        margin-bottom: 17px;
       }
 
       .toolbar-icon svg {
@@ -222,9 +236,8 @@
 
     .card:hover {
       background: var(--hover-bg);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      border-color: #475569;
+      border-color: var(--accent);
+      box-shadow: 0 6px 18px rgba(59, 130, 246, 0.18);
     }
 
     .card-content { 
@@ -575,6 +588,158 @@
       padding-bottom: 70px;
     }
 
+    .page {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    /* ===== CONTENT TIMELINE STYLES ===== */
+    .filter-buttons {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      overflow-x: auto;
+      padding-bottom: 5px;
+    }
+
+    .filter-btn {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.85rem;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .filter-btn.active {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 20px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--accent), var(--border-color));
+    }
+
+    .timeline-group {
+      margin-bottom: 30px;
+    }
+
+    .timeline-month {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      font-weight: 700;
+      margin-bottom: 15px;
+      padding-left: 25px;
+      position: relative;
+    }
+
+    .timeline-month::before {
+      content: '';
+      position: absolute;
+      left: -14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--bg-color);
+    }
+
+    .timeline-entry {
+      position: relative;
+      margin-bottom: 20px;
+      padding-left: 25px;
+    }
+
+    .timeline-entry::before {
+      content: '';
+      position: absolute;
+      left: -14px;
+      top: 12px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--card-bg);
+      border: 2px solid var(--accent);
+    }
+
+    .timeline-entry.hidden {
+      display: none;
+    }
+
+    .timeline-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .timeline-card:hover {
+      background: var(--hover-bg);
+      border-color: var(--accent);
+      box-shadow: 0 6px 18px rgba(59, 130, 246, 0.18);
+    }
+
+    .timeline-title {
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .timeline-meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .add-content-card {
+      background: transparent;
+      border: 1px dashed var(--text-muted);
+      justify-content: center;
+      color: var(--text-muted);
+      font-weight: 600;
+      cursor: pointer;
+      padding: 16px;
+      border-radius: var(--radius);
+      text-align: center;
+      transition: all 0.2s ease;
+      margin-top: 15px;
+    }
+
+    .add-content-card:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(59, 130, 246, 0.1);
+      transform: none;
+    }
+
       /* ===== iOS PWA Date Input Fix ===== */
 
     *, *::before, *::after {
@@ -637,23 +802,96 @@
     <div class="cover-image"></div>
 
     <div class="container">
-      <h1>To-Do Dashboard</h1>
-
-      <div class="section-header">
-        <div class="section-title">Anstehende Projekte</div>
-        <button class="sort-btn" onclick="sortProjects()">⇅ Nach Priorität</button>
+      <!-- PAGE: Overview -->
+      <div class="page" id="page-overview" style="display: none;">
+        <h1>Home</h1>
+        <div class="section-header">
+          <div class="section-title">Willkommen</div>
+        </div>
+        <div class="scroll-area">
+          <div style="padding: 20px; text-align: center; color: var(--text-muted);">
+            <p>Dies ist deine Home-Seite. Weitere Inhalte folgen.</p>
+          </div>
+          <div style="height:65px;"></div>
+        </div>
       </div>
 
-      <div class="scroll-area">
-        <div class="project-list" id="projectListContainer"></div>
+      <!-- PAGE: To-Do / Tasks -->
+      <div class="page" id="page-tasks">
+        <h1>To-Do Dashboard</h1>
 
-        <div style="margin-top: 15px;">
-          <div class="card add-card" onclick="openNewProjectModal()">
-            + Neues Projekt hinzufügen
-          </div>
+        <div class="section-header">
+          <div class="section-title">Anstehende Projekte</div>
+          <button class="sort-btn" onclick="sortProjects()">⇅ Nach Priorität</button>
         </div>
 
-        <div style="height:65px;"></div>
+        <div class="scroll-area">
+          <div class="project-list" id="projectListContainer"></div>
+
+          <div style="margin-top: 15px;">
+            <div class="card add-card" onclick="openNewProjectModal()">
+              + Neues Projekt hinzufügen
+            </div>
+          </div>
+
+          <div style="height:65px;"></div>
+        </div>
+      </div>
+
+      <!-- PAGE: Team / Content -->
+      <div class="page" id="page-team" style="display: none;">
+        <h1>Content</h1>
+        <div class="section-header">
+          <div class="section-title">Content-Einträge</div>
+        </div>
+
+        <div class="scroll-area">
+          <!-- Filter Buttons -->
+          <div class="filter-buttons">
+            <button class="filter-btn active" onclick="filterContentByType('all')">Alle</button>
+            <button class="filter-btn" onclick="filterContentByType('veranstaltung')">Veranstaltungs-Content</button>
+            <button class="filter-btn" onclick="filterContentByType('post')">Posts</button>
+          </div>
+
+          <!-- Timeline -->
+          <div class="timeline" id="contentTimeline"></div>
+
+          <!-- Add new content -->
+          <div class="add-content-card" onclick="openNewContentModal()">
+            + Neuen Eintrag hinzufügen
+          </div>
+
+          <div style="height:65px;"></div>
+        </div>
+      </div>
+
+      <!-- PAGE: Chat / Stats -->
+      <div class="page" id="page-chat" style="display: none;">
+        <h1>Vermietungen</h1>
+        <div class="section-header">
+          <div class="section-title">Geplante Vermietungen</div>
+        </div>
+        <div class="scroll-area">
+          <div class="timeline" id="vermietungenTimeline"></div>
+          <div class="add-content-card" onclick="openNewVermietungModal()">
+            + Neue Vermietung hinzufügen
+          </div>
+          <div style="height:65px;"></div>
+        </div>
+      </div>
+
+      <!-- PAGE: Profile / User -->
+      <div class="page" id="page-profile" style="display: none;">
+        <h1>Profil</h1>
+        <div class="section-header">
+          <div class="section-title">Benutzereinstellungen</div>
+        </div>
+        <div class="scroll-area">
+          <div style="padding: 20px; text-align: center; color: var(--text-muted);">
+            <p>Profil- und Benutzereinstellungen folgen in Kürze.</p>
+          </div>
+          <div style="height:65px;"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -693,14 +931,29 @@
     </button>
     <button class="toolbar-btn" onclick="setActivePage(this, 'chat')">
         <span class="toolbar-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4 4V20H20" fill="none" stroke="#1F7DB6" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
-            <rect x="5.75"  y="13" width="3" height="5"  fill="#1F7DB6"/>
-            <rect x="10.5"  y="10" width="3" height="8"  fill="#1F7DB6"/>
-            <rect x="15.25" y="7"  width="3" height="11" fill="#1F7DB6"/>
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
+            viewBox="0 0 22 22" fill="none">
+            <g stroke="#1F7DB6" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" fill="none">
+              <!-- Calendar body -->
+              <path d="M5 6H19V20H5Z"/>
+              <!-- Header line -->
+              <path d="M5 10H19"/>
+              <!-- Binding rings -->
+              <path d="M8 4V8"/>
+              <path d="M16 4V8"/>
+              <!-- Centered micro date squares with more vertical spacing -->
+              <!-- obere Reihe -->
+              <rect x="7.75"  y="13" width="0.5" height="0.5"/>
+              <rect x="11.75" y="13" width="0.5" height="0.5"/>
+              <rect x="15.75" y="13" width="0.5" height="0.5"/>
+              <!-- untere Reihe -->
+              <rect x="7.75"  y="17" width="0.5" height="0.5"/>
+              <rect x="11.75" y="17" width="0.5" height="0.5"/>
+              <rect x="15.75" y="17" width="0.5" height="0.5"/>
+            </g>
           </svg>
         </span>
-        <span>Stats</span>
+        <span>Vermietungen</span>
     </button>
     <button class="toolbar-btn" onclick="setActivePage(this, 'profile')">
         <span class="toolbar-icon">
@@ -786,6 +1039,118 @@
     </div>
   </div>
 
+  <!-- CONTENT MODAL -->
+  <div class="modal-overlay" id="contentModal" onclick="closeContentModal(event)">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span id="contentModalTitle">Neuen Eintrag hinzufügen</span>
+        <button class="modal-close-btn" onclick="toggleContentModal()" aria-label="Schließen">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="form-group">
+        <label>Titel</label>
+        <input type="text" id="contentTitle">
+      </div>
+
+      <div class="form-group">
+        <label>Kategorie</label>
+        <select id="contentKategorie">
+          <option value="story">Story</option>
+          <option value="post">Beitrag</option>
+          <option value="reel">Reel</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Typ</label>
+        <select id="contentType" onchange="updateContentType()">
+          <option value="post">Post</option>
+          <option value="veranstaltung">Veranstaltungs-Content</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Beschreibung</label>
+        <textarea id="contentDescription"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Datum</label>
+        <input type="date" id="contentDate">
+      </div>
+
+      <div class="form-group" id="veranstaltungGroup" style="display: none;">
+        <label>Veranstaltungsname</label>
+        <input type="text" id="contentVeranstaltungsname">
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-delete" id="contentDeleteBtn" onclick="deleteContent()" style="display: none;">Löschen</button>
+        <button class="btn-save" onclick="saveAndCloseContent()">Speichern</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Vermietung -->
+  <div class="modal-overlay" id="vermietungModal" onclick="closeVermietungModal(event)">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span id="vermietungModalTitle">Neue Vermietung</span>
+        <button class="modal-close-btn" onclick="toggleVermietungModal()" aria-label="Schließen">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="form-group">
+        <label>Titel</label>
+        <input type="text" id="vermietungTitel">
+      </div>
+      <div class="form-group">
+        <label>Paket</label>
+        <select id="vermietungPaket">
+          <option value="XS">XS</option>
+          <option value="S">S</option>
+          <option value="M">M</option>
+          <option value="L">L</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Geplanter Zeitpunkt</label>
+        <div style="display:flex; gap:8px;">
+          <input type="date" id="vermietungZeitpunktDatum" style="flex:1;">
+          <input type="time" id="vermietungZeitpunktUhrzeit" style="flex:1;">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Ort</label>
+        <input type="text" id="vermietungOrt" placeholder="Optional">
+      </div>
+      <div class="form-group">
+        <label>Status</label>
+        <select id="vermietungStatus">
+          <option value="offen">Offen</option>
+          <option value="bestaetigt">Bestätigt</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Aufbauzeitpunkt</label>
+        <div style="display:flex; gap:8px;">
+          <input type="date" id="vermietungAufbauDatum" style="flex:1;">
+          <input type="time" id="vermietungAufbauUhrzeit" style="flex:1;">
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-delete" id="vermietungDeleteBtn" onclick="confirmDeleteVermietung()" style="display: none;">Löschen</button>
+        <button class="btn-save" onclick="saveAndCloseVermietung()">Speichern</button>
+      </div>
+    </div>
+  </div>
+
 
 
 
@@ -793,6 +1158,28 @@
     let currentCardId = null;
     let currentCardEl = null;
     let isCreatingNew = false;
+
+    // PAGE SWITCHING
+    function setActivePage(buttonEl, pageName) {
+      // Remove active class from all toolbar buttons
+      document.querySelectorAll('.toolbar-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      
+      // Add active class to clicked button
+      buttonEl.classList.add('active');
+      
+      // Hide all pages
+      document.querySelectorAll('.page').forEach(page => {
+        page.style.display = 'none';
+      });
+      
+      // Show the selected page
+      const pageEl = document.getElementById(`page-${pageName}`);
+      if (pageEl) {
+        pageEl.style.display = 'flex';
+      }
+    }
 
     const sortModes = [
       { key: 'priority', label: 'Nach Priorität' },
@@ -1077,16 +1464,456 @@
         { event: "*", schema: "public", table: "projects" },
         (payload) => {
             console.log("Realtime Update:", payload);
-            loadProjects(); // lädt alles neu
+            loadProjects();
+        }
+        )
+        .subscribe();
+
+    supabaseClient
+        .channel("content-realtime")
+        .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "Content" },
+        (payload) => {
+            console.log("Content Realtime Update:", payload);
+            loadContent();
         }
         )
         .subscribe();
     }
 
+    // ===== CONTENT FUNCTIONS =====
+    let currentContentId = null;
+    let contentFilterType = 'all';
+
+    function filterContentByType(type) {
+      contentFilterType = type;
+      
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      
+      document.querySelectorAll('.timeline-entry').forEach(entry => {
+        if (type === 'all' || entry.dataset.type === type) {
+          entry.classList.remove('hidden');
+        } else {
+          entry.classList.add('hidden');
+        }
+      });
+    }
+
+    function openNewContentModal() {
+      currentContentId = null;
+      document.getElementById('contentModalTitle').innerText = 'Neuen Eintrag hinzufügen';
+      document.getElementById('contentTitle').value = '';
+      document.getElementById('contentKategorie').value = 'story';
+      document.getElementById('contentType').value = 'post';
+      document.getElementById('contentDescription').value = '';
+      document.getElementById('contentDate').value = '';
+      document.getElementById('contentVeranstaltungsname').value = '';
+      document.getElementById('contentDeleteBtn').style.display = 'none';
+      updateContentType();
+      toggleContentModal();
+    }
+
+    function updateContentType() {
+      const type = document.getElementById('contentType').value;
+      const group = document.getElementById('veranstaltungGroup');
+      if (type === 'veranstaltung') {
+        group.style.display = 'block';
+      } else {
+        group.style.display = 'none';
+      }
+    }
+
+    function toggleContentModal() {
+      document.getElementById('contentModal').classList.toggle('active');
+    }
+
+    function closeContentModal(event) {
+      if (event && event.target.id === 'contentModal') {
+        toggleContentModal();
+      }
+    }
+
+    async function saveAndCloseContent() {
+      try {
+        const titel = document.getElementById('contentTitle').value.trim();
+        if (!titel) {
+          alert('Bitte einen Titel eingeben!');
+          return;
+        }
+
+        const typ = document.getElementById('contentType').value;
+        const kategorie = document.getElementById('contentKategorie').value;
+        const beschreibung = document.getElementById('contentDescription').value || '';
+        const datum = document.getElementById('contentDate').value;
+        const veranstaltungsname = document.getElementById('contentVeranstaltungsname').value || '';
+
+        if (currentContentId) {
+          const { error } = await supabaseClient
+            .from('Content')
+            .update({
+              titel,
+              typ,
+              kategorie,
+              beschreibung,
+              datum,
+              veranstaltungsname
+            })
+            .eq('id', currentContentId);
+
+          if (error) {
+            console.error('Update Fehler:', error);
+            alert('Fehler: ' + error.message);
+            return;
+          }
+        } else {
+          const { error } = await supabaseClient
+            .from('Content')
+            .insert([{
+              titel,
+              typ,
+              kategorie,
+              beschreibung,
+              datum,
+              veranstaltungsname
+            }]);
+
+          if (error) {
+            console.error('Insert Fehler:', error);
+            alert('Fehler: ' + error.message);
+            return;
+          }
+        }
+
+        toggleContentModal();
+        await loadContent();
+      } catch (e) {
+        console.error('Fehler:', e);
+        alert('Unerwarteter Fehler: ' + (e?.message || e));
+      }
+    }
+
+    async function deleteContent() {
+      if (!currentContentId) return;
+      
+      const { error } = await supabaseClient
+        .from('Content')
+        .delete()
+        .eq('id', currentContentId);
+
+      if (error) {
+        console.error('Delete Fehler:', error);
+        alert('Fehler beim Löschen: ' + error.message);
+        return;
+      }
+
+      currentContentId = null;
+      toggleContentModal();
+      await loadContent();
+    }
+
+    async function loadContent() {
+      try {
+        const { data, error } = await supabaseClient
+          .from('Content')
+          .select('*')
+          .order('datum', { ascending: true });
+
+        if (error) {
+          console.error('Fehler:', error);
+          return;
+        }
+
+        const timeline = document.getElementById('contentTimeline');
+        timeline.innerHTML = '';
+
+        if (!data || data.length === 0) {
+          timeline.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-muted);">Noch keine Einträge.</div>';
+          return;
+        }
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const itemsWithDate = data.filter(item => item.datum);
+
+        const upcomingItems = itemsWithDate
+          .filter(item => {
+            const d = new Date(item.datum);
+            d.setHours(0, 0, 0, 0);
+            return d.getTime() >= today.getTime();
+          })
+          .sort((a, b) => new Date(a.datum).getTime() - new Date(b.datum).getTime());
+
+        const pastItems = itemsWithDate
+          .filter(item => {
+            const d = new Date(item.datum);
+            d.setHours(0, 0, 0, 0);
+            return d.getTime() < today.getTime();
+          })
+          .sort((a, b) => new Date(b.datum).getTime() - new Date(a.datum).getTime());
+
+        const sortedItems = [...upcomingItems, ...pastItems];
+
+        const grouped = {};
+        sortedItems.forEach(item => {
+          if (!item.datum) return;
+          const date = new Date(item.datum);
+          const monthKey = date.toLocaleString('de-DE', { month: 'long', year: 'numeric' }).toUpperCase();
+          if (!grouped[monthKey]) {
+            grouped[monthKey] = [];
+          }
+          grouped[monthKey].push(item);
+        });
+
+        Object.entries(grouped).forEach(([monthKey, items]) => {
+          const groupDiv = document.createElement('div');
+          groupDiv.className = 'timeline-group';
+
+          const monthDiv = document.createElement('div');
+          monthDiv.className = 'timeline-month';
+          monthDiv.textContent = monthKey;
+          groupDiv.appendChild(monthDiv);
+
+          items.forEach(item => {
+            const entryDiv = document.createElement('div');
+            entryDiv.className = 'timeline-entry';
+            entryDiv.dataset.type = item.typ;
+            
+            if (contentFilterType !== 'all' && contentFilterType !== item.typ) {
+              entryDiv.classList.add('hidden');
+            }
+
+            const displayTyp = item.typ === 'veranstaltung' ? 'Veranstaltungs-Content' : 'Post';
+            const displayDate = new Date(item.datum).toLocaleDateString('de-DE');
+            const displayKategorie = item.kategorie ? (item.kategorie.charAt(0).toUpperCase() + item.kategorie.slice(1)) : '—';
+            const displayVeranstaltung = item.veranstaltungsname ? ` • ${item.veranstaltungsname}` : '';
+
+            entryDiv.innerHTML = `
+              <div class="timeline-card" onclick="editContent(event, '${item.id}')">
+                <div class="timeline-content">
+                  <div class="timeline-title">${item.titel}</div>
+                  <div class="timeline-meta">${displayTyp} • ${displayDate} • ${displayKategorie}${displayVeranstaltung}</div>
+                </div>
+              </div>
+            `;
+
+            groupDiv.appendChild(entryDiv);
+          });
+
+          timeline.appendChild(groupDiv);
+        });
+      } catch (e) {
+        console.error('Fehler:', e);
+      }
+    }
+
+    async function editContent(event, contentId) {
+      event.stopPropagation();
+      currentContentId = contentId;
+
+      const { data, error } = await supabaseClient
+        .from('Content')
+        .select('*')
+        .eq('id', contentId)
+        .single();
+
+      if (error) {
+        console.error('Fehler:', error);
+        return;
+      }
+
+      document.getElementById('contentModalTitle').innerText = 'Eintrag bearbeiten';
+      document.getElementById('contentTitle').value = data.titel;
+      document.getElementById('contentKategorie').value = data.kategorie || 'story';
+      document.getElementById('contentType').value = data.typ;
+      document.getElementById('contentDescription').value = data.beschreibung || '';
+      document.getElementById('contentDate').value = data.datum;
+      document.getElementById('contentVeranstaltungsname').value = data.veranstaltungsname || '';
+      document.getElementById('contentDeleteBtn').style.display = 'block';
+
+      updateContentType();
+      toggleContentModal();
+    }
+
+    // ===== VERMIETUNGEN FUNCTIONS =====
+    let currentVermietungId = null;
+
+    function openNewVermietungModal() {
+      currentVermietungId = null;
+      document.getElementById('vermietungModalTitle').innerText = 'Neue Vermietung';
+      document.getElementById('vermietungTitel').value = '';
+      document.getElementById('vermietungPaket').value = 'XS';
+      document.getElementById('vermietungZeitpunktDatum').value = '';
+      document.getElementById('vermietungZeitpunktUhrzeit').value = '';
+      document.getElementById('vermietungOrt').value = '';
+      document.getElementById('vermietungStatus').value = 'offen';
+      document.getElementById('vermietungAufbauDatum').value = '';
+      document.getElementById('vermietungAufbauUhrzeit').value = '';
+      document.getElementById('vermietungDeleteBtn').style.display = 'none';
+      toggleVermietungModal();
+    }
+
+    function toggleVermietungModal() {
+      document.getElementById('vermietungModal').classList.toggle('active');
+    }
+
+    function closeVermietungModal(event) {
+      if (event && event.target.id === 'vermietungModal') {
+        toggleVermietungModal();
+      }
+    }
+
+    async function saveAndCloseVermietung() {
+      try {
+        const titel = document.getElementById('vermietungTitel').value.trim();
+        const paket = document.getElementById('vermietungPaket').value;
+        const zpDatum = document.getElementById('vermietungZeitpunktDatum').value;
+        const zpUhrzeit = document.getElementById('vermietungZeitpunktUhrzeit').value || '00:00';
+        const zeitpunkt = zpDatum ? `${zpDatum}T${zpUhrzeit}` : '';
+        const ort = document.getElementById('vermietungOrt').value;
+        const status = document.getElementById('vermietungStatus').value;
+        const aufbauDatum = document.getElementById('vermietungAufbauDatum').value;
+        const aufbauUhrzeit = document.getElementById('vermietungAufbauUhrzeit').value || '00:00';
+        const aufbauzeitpunkt = aufbauDatum ? `${aufbauDatum}T${aufbauUhrzeit}` : '';
+        if (!titel || !zeitpunkt) {
+          alert('Bitte Titel und Zeitpunkt angeben!');
+          return;
+        }
+        let res;
+        if (!currentVermietungId) {
+          res = await supabaseClient.from('vermietungen').insert([{
+            titel, paket, zeitpunkt, ort, status, aufbauzeitpunkt,
+            erstellt_am: new Date().toISOString()
+          }]);
+        } else {
+          res = await supabaseClient.from('vermietungen').update({
+            titel, paket, zeitpunkt, ort, status, aufbauzeitpunkt
+          }).eq('id', currentVermietungId);
+        }
+        if (res.error) { alert('Fehler: ' + res.error.message); return; }
+        toggleVermietungModal();
+        await loadVermietungen();
+      } catch (e) {
+        alert('Fehler: ' + (e?.message || e));
+      }
+    }
+
+    function confirmDeleteVermietung() {
+      if (!currentVermietungId) return;
+      if (!confirm('Vermietung wirklich löschen?')) return;
+      supabaseClient.from('vermietungen').delete().eq('id', currentVermietungId).then(({ error }) => {
+        if (error) { alert('Fehler: ' + error.message); return; }
+        currentVermietungId = null;
+        toggleVermietungModal();
+        loadVermietungen();
+      });
+    }
+
+    window.editVermietung = async function(id) {
+      const { data, error } = await supabaseClient.from('vermietungen').select('*').eq('id', id).single();
+      if (error) { alert('Fehler: ' + error.message); return; }
+      currentVermietungId = id;
+      document.getElementById('vermietungModalTitle').innerText = 'Vermietung bearbeiten';
+      document.getElementById('vermietungTitel').value = data.titel || '';
+      document.getElementById('vermietungPaket').value = data.paket || 'XS';
+      const zp = data.zeitpunkt ? data.zeitpunkt.slice(0, 16).split('T') : ['', ''];
+      document.getElementById('vermietungZeitpunktDatum').value = zp[0] || '';
+      document.getElementById('vermietungZeitpunktUhrzeit').value = zp[1] || '';
+      document.getElementById('vermietungOrt').value = data.ort || '';
+      document.getElementById('vermietungStatus').value = data.status || 'offen';
+      const ab = data.aufbauzeitpunkt ? data.aufbauzeitpunkt.slice(0, 16).split('T') : ['', ''];
+      document.getElementById('vermietungAufbauDatum').value = ab[0] || '';
+      document.getElementById('vermietungAufbauUhrzeit').value = ab[1] || '';
+      document.getElementById('vermietungDeleteBtn').style.display = 'block';
+      toggleVermietungModal();
+    }
+
+    function formatDateTime(dt) {
+      if (!dt) return '–';
+      // Schneide auf 16 Zeichen (YYYY-MM-DDTHH:MM) um Zeitzonenversatz durch UTC-Konvertierung zu vermeiden
+      const local = dt.slice(0, 16);
+      const [datePart, timePart] = local.split('T');
+      const [year, month, day] = datePart.split('-');
+      return `${day}.${month}.${year.slice(2)}, ${timePart} Uhr`;
+    }
+
+    async function loadVermietungen() {
+      try {
+        const { data, error } = await supabaseClient
+          .from('vermietungen')
+          .select('*')
+          .order('zeitpunkt', { ascending: true });
+        if (error) { console.error('Fehler:', error); return; }
+        const timeline = document.getElementById('vermietungenTimeline');
+        timeline.innerHTML = '';
+        if (!data || data.length === 0) {
+          timeline.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-muted);">Noch keine Vermietungen.</div>';
+          return;
+        }
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const upcomingItems = data
+          .filter(item => { const d = new Date(item.zeitpunkt); d.setHours(0,0,0,0); return d.getTime() >= today.getTime(); })
+          .sort((a, b) => new Date(a.zeitpunkt) - new Date(b.zeitpunkt));
+        const pastItems = data
+          .filter(item => { const d = new Date(item.zeitpunkt); d.setHours(0,0,0,0); return d.getTime() < today.getTime(); })
+          .sort((a, b) => new Date(b.zeitpunkt) - new Date(a.zeitpunkt));
+        const grouped = {};
+        [...upcomingItems, ...pastItems].forEach(item => {
+          const date = new Date(item.zeitpunkt);
+          const monthKey = date.toLocaleString('de-DE', { month: 'long', year: 'numeric' }).toUpperCase();
+          if (!grouped[monthKey]) grouped[monthKey] = [];
+          grouped[monthKey].push(item);
+        });
+        const now = new Date();
+        Object.entries(grouped).forEach(([monthKey, items]) => {
+          const groupDiv = document.createElement('div');
+          groupDiv.className = 'timeline-group';
+          const monthDiv = document.createElement('div');
+          monthDiv.className = 'timeline-month';
+          monthDiv.textContent = monthKey;
+          groupDiv.appendChild(monthDiv);
+          items.forEach(item => {
+            const isPast = new Date(item.zeitpunkt) < now;
+            const statusLabel = item.status === 'bestaetigt' ? 'Bestätigt' : 'Offen';
+            const statusClass = item.status === 'bestaetigt' ? 'low' : 'medium';
+            const ortPart = item.ort ? ` • 📍 ${item.ort}` : '';
+            const aufbauPart = item.aufbauzeitpunkt ? `Aufbau: ${formatDateTime(item.aufbauzeitpunkt)}` : '';
+            const paketBadge = item.paket ? `<span class="badge" style="background:rgba(59,130,246,0.15); color:#93c5fd; border:1px solid rgba(59,130,246,0.4); margin-left: 8px;">${item.paket}</span>` : '';
+            const entryDiv = document.createElement('div');
+            entryDiv.className = 'timeline-entry' + (isPast ? '' : '');
+            entryDiv.innerHTML = `
+              <div class="timeline-card" style="${isPast ? 'opacity:0.6;' : ''}" onclick="editVermietung('${item.id}')">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:-4px; margin-bottom:8px;">
+                  <div class="timeline-title">${item.titel}</div>
+                  <div style="display:flex; gap:6px; flex-shrink:0; margin-left:10px;">
+                    ${paketBadge}
+                    <span class="badge ${statusClass}">${statusLabel}</span>
+                  </div>
+                </div>
+                <div class="timeline-meta" style="font-weight:700; color: var(--text-main);">${formatDateTime(item.zeitpunkt)}${ortPart}</div>
+                ${aufbauPart ? `<div class="timeline-meta" style="margin-top:4px;">${aufbauPart}</div>` : ''}
+              </div>
+            `;
+            groupDiv.appendChild(entryDiv);
+          });
+          timeline.appendChild(groupDiv);
+        });
+      } catch (e) {
+        console.error('Fehler:', e);
+      }
+    }
+
     window.addEventListener("DOMContentLoaded", () => {
       updateSortButtonLabel();
       loadProjects();
-      startRealtime(); 
+      loadContent();
+      loadVermietungen();
+      startRealtime();
     });
 
     if ("serviceWorker" in navigator) {
