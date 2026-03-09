@@ -828,16 +828,23 @@
 
 <div id="loginPage" style="
 display:flex;
-align-items:center;
-justify-content:center;
+flex-direction:column;
+align-items:stretch;
+justify-content:flex-start;
 position:fixed;
 inset:0;
+min-height:100dvh;
 z-index:2000;
 background:#0f172a;
 color:white;
-padding:24px;
+padding:0;
+box-sizing:border-box;
+overflow-y:auto;
 ">
 
+<div class="cover-image" style="width:100%; flex-shrink:0;"></div>
+
+<div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; padding:0 24px 24px; box-sizing:border-box;">
 <div style="width:100%; max-width:360px; padding:24px;">
 
 <h1 style="margin-bottom:20px;">Login</h1>
@@ -849,7 +856,12 @@ padding:24px;
 
 <div class="form-group">
 <label>Passwort</label>
-<input type="password" id="loginPassword">
+<div style="position:relative;">
+  <input type="password" id="loginPassword" style="padding-right:44px;">
+  <button type="button" id="togglePasswordBtn" onclick="(function(){const i=document.getElementById('loginPassword');const b=document.getElementById('togglePasswordBtn');if(i.type==='password'){i.type='text';b.innerHTML='<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'20\' height=\'20\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><path d=\'M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z\'/><circle cx=\'12\' cy=\'12\' r=\'3\'/></svg>';}else{i.type='password';b.innerHTML='<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'20\' height=\'20\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><path d=\'M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94\'/><path d=\'M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19\'/><line x1=\'1\' y1=\'1\' x2=\'23\' y2=\'23\'/></svg>';}})()" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:transparent;border:none;cursor:pointer;padding:0;color:var(--text-muted);display:flex;align-items:center;" onmouseover="this.style.color='var(--text-main)'" onmouseout="this.style.color='var(--text-muted)'">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+  </button>
+</div>
 </div>
 
 <button class="btn-save" style="width:100%; margin-top:20px;" onclick="loginUser()">
@@ -859,6 +871,10 @@ Anmelden
 <p id="loginError" style="color:#f87171; margin-top:12px;"></p>
 
 </div>
+</div>
+
+<p style="position:fixed; bottom:20px; left:0; right:0; text-align:center; font-size:0.75rem; color:var(--text-muted); letter-spacing:0.5px; margin:0;">ConTec Eventtechnik Dashboard</p>
+
 </div>
 
   <!-- Nur Hintergrund (leer!) -->
